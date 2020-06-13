@@ -1,0 +1,18 @@
+plotting 2d
+contour f
+getting expansion coeff reduction
+
+np.meshgrid
+
+einsum: optimize = 'optimal' / 'greedy'
+
+primitive function
+
+best to not use lambda: x,y fn
+
+scipy integrate.nquad
+
+wireframe
+
+np.block for matrix
+@ as matrix multiplication
