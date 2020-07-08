@@ -12,6 +12,9 @@ def f(x):
 def func_u(x):
     return 1 / np.pi * np.cos(np.pi*x)
 
+def func_phi(x):
+    return 1 / (np.pi**2) * np.sin(np.pi*x)
+
 def poisson_homogen(func, p, alpha):
     
     x_int,w_int = bf.gauss_quad(p+5)
@@ -96,8 +99,10 @@ def poisson_homogen(func, p, alpha):
     
     ## Graph
     fig, ax = plt.subplots(1,1,squeeze=False,figsize=(12,9))
-    ax[0,0].plot(x, func_u(x), label="Exact")
-    ax[0,0].plot(x, u_h, label="Discretized")
+    ax[0,0].set_xlabel('x')
+    ax[0,0].set_ylabel(r'$\phi$')
+    ax[0,0].plot(x, func_phi(x), label="Exact")
+    ax[0,0].plot(x, phi_h, label="Discretized")
     ax[0,0].grid(True,which="major",color="#999999")
     ax[0,0].grid(True,which="minor",color="#DDDDDD",ls="--")
     ax[0,0].minorticks_on()
@@ -114,7 +119,7 @@ def poisson_homogen(func, p, alpha):
     return E, K
     
     
-poisson_homogen(f,3,1)
+# poisson_homogen(f,6,1)
 
 def poisson_nonhomogen(func, p):
     
@@ -134,7 +139,7 @@ def poisson_nonhomogen(func, p):
     #     f_i[i] = np.sum(w_int*func(x_int)*e_i[i,:])
     up_i = np.zeros(p+1)
     for i in range(p+1):
-        up_i[i] = np.sum(w_int * func(x_int) * h_i[i,:])
+        up_i[i] = np.sum(w_int * func_u(x_int) * h_i[i,:])
         
     
     #mass matrices
@@ -208,8 +213,11 @@ def poisson_nonhomogen(func, p):
     
     ## Graph
     fig, ax = plt.subplots(1,1,squeeze=False,figsize=(12,9))
-    ax[0,0].plot(x, func_u(x), label="Exact")
-    ax[0,0].plot(x, u_h, label="Discretized")
+    ax[0,0].set_title('Implementation B: Polynomial Degree 5')
+    ax[0,0].set_xlabel('x')
+    ax[0,0].set_ylabel(r'$\phi$')
+    ax[0,0].plot(x, func_phi(x), label="Exact")
+    ax[0,0].plot(x, phi_h, label="Discretized")
     ax[0,0].grid(True,which="major",color="#999999")
     ax[0,0].grid(True,which="minor",color="#DDDDDD",ls="--")
     ax[0,0].minorticks_on()
@@ -225,4 +233,4 @@ def poisson_nonhomogen(func, p):
     
     return E, K
 
-# poisson_nonhomogen(func_u,1)
+poisson_nonhomogen(f,6)
